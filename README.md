@@ -1,2 +1,0 @@
-# skillfactory
-learning repo
