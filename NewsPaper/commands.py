@@ -43,7 +43,7 @@ com_1 = Comment.objects.create(posts=post_1,comment_text='Some text',autor=user_
 com_2 = Comment.objects.create(posts=post_1,comment_text='Some text',autor=user_1)
 com_3 = Comment.objects.create(posts=post_2,comment_text='Some text',autor=user_4)
 com_4 = Comment.objects.create(posts=news_1,comment_text='Some text',autor=user_2)
-
+com_5 = Comment.objects.create(posts=post_2,comment_text='Some text',autor=user_4)
 # Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
 
 post_1.like()
@@ -63,3 +63,54 @@ com_2.like()
 com_3.like()
 post_1.dislike()
 post_2.dislike()
+
+# Обновить рейтинги пользователей.
+
+author_1.update_rating()
+author_2.update_rating()
+
+# Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
+
+top_author = Author.objects.order_by('-author_rating').first()
+print(f"Username: {top_author.user.username}, Rating: {top_author.author_rating}")
+
+# Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+
+post_1.post_title = 'Post Title 1' #  Добавим заголовок к статьям контент
+post_1.save()
+post_1.post_content = 'Находящийся под домашним арестом в Дубае (ОАЭ) нападающий московского «Спартака» Квинси Промес\
+                       поддержал своих одноклубников перед матчем 20-го тура чемпионата России по футболу с воронежским «Факелом»'
+post_1.save()
+
+post_2.post_title = 'Post Title 2'
+post_2.save()
+post_2.post_content = 'Учёный из Перми, кандидат физико-математических наук, доцент кафедры прикладной физики Пермского\
+                        Политеха Эргаш Нуруллаев рассказал о влиянии на человека излучения от бытовых приборов'
+post_2.save()
+
+news_1.post_title = 'News Title 1'
+news_1.save()
+
+news_1.post_content = 'По данным Ассоциации компаний интернет-торговли и Сбербанка, доля трансграничной торговли\
+                        сократилась с 36% в 2017 году до всего лишь 3% в 2023 году.Одновременно с этим, объемы интернет-торговли в стране\
+                         выросли в шесть раз, достигнув 6,3 триллиона рублей, в сравнении с 1,04 триллиона рублей несколько лет назад. \
+                         Это говорит о том, что российские потребители все чаще предпочитают делать покупки внутри страны.'
+news_1.save()
+
+best_post = Post.objects.order_by('-post_rating').first()
+print(f"Creation Date: {best_post.post_time_creation.strftime('%Y-%m-%d %H:%M:%S')},\n"
+      f"Username: {best_post.author.user.username},\n"
+      f"Rating: {best_post.post_rating},\n"
+      f"Title: {best_post.post_title},\n"
+      f"Content: {best_post.preview()}\n")
+
+# Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+n = 1
+for comment in best_post.post_comments.all():
+    print(f"Comment Nº {n},\n"
+          f"Date: {comment.comment_time},\n"
+          f"User: {comment.autor},\n"
+          f"Rating: {comment.comment_rating},\n"
+          f"Text: {comment.comment_text}\n"
+          )
+
