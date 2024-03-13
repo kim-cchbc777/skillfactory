@@ -23,3 +23,6 @@ class Post(models.Model):
 
     def preview(self):
         return self.post_content[:124] + str("...")
+
+    def __str__(self):
+        return f'{self.post_title.title()}: {self.post_content[:50]}'
