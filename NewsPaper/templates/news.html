@@ -1,5 +1,5 @@
 {% extends 'flatpages/default.html' %}
-
+{% load custom_filters %}
 {% block title %}
 Products
 {% endblock title %}
@@ -19,10 +19,10 @@ Products
             <tr>
                 <td>
                     <a href="{% url 'single_news' pk=post.pk %}">
-                    {{ post.post_title }}</a>
+                    {{ post.post_title|censor }}</a>
                 </td>
                 <td>{{ post.post_time_creation|date:'d M Y' }}</td>
-                <td>{{ post.post_content|truncatewords:20 }}</td>
+                <td>{{ post.post_content|censor|truncatewords:20 }}</td>
             </tr>
         {% endfor %}
 
