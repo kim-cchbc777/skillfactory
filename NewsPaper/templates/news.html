@@ -1,5 +1,9 @@
 {% extends 'flatpages/default.html' %}
 {% load custom_filters %}
+{% load custom_tags %}
+
+
+
 {% block title %}
 Products
 {% endblock title %}
@@ -30,4 +34,28 @@ Products
     {% else %}
         <h2> There are no news </h2>
     {% endif %}
+
+{#/// PAGINATION ///#}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">
+               {{ page_obj.previous_page_number }}
+           </a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">
+           {{ page_obj.next_page_number }}
+       </a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
 {% endblock content %}

@@ -18,3 +18,6 @@ class Author(models.Model):
 
         self.author_rating = posts_rating + comment_rating + comment_post_rating
         self.save()
+
+    def __str__(self):
+        return self.first_name
