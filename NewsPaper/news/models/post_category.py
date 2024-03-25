@@ -4,5 +4,5 @@ from news.models.post import Post
 
 
 class PostCategory(models.Model):
-    posts = models.ForeignKey(Category, on_delete=models.CASCADE)
-    category = models.ForeignKey(Post, on_delete=models.CASCADE)
+    posts = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
